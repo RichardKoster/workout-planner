@@ -1,19 +1,12 @@
 {
-  "name": "workout-planner",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
-  },
   "dependencies": {
-    "core-js": "^3.15.1",
-    "nuxt": "^2.15.7"
-  },
-  "devDependencies": {
-    "@nuxtjs/tailwindcss": "^4.2.0",
-    "postcss": "^8.3.5"
+    "css-loader": "^6.2.0",
+    "path": "^0.12.7",
+    "sass": "^1.37.5",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1",
+    "webpack": "^5.50.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }

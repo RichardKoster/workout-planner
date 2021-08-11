@@ -1,0 +1,53 @@
+.calendar {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: $color5;
+
+    .header-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        border-bottom: 1px solid rgba(0,0,0,0.3);
+        height: 40px;
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: calc(100% / 7);
+            text-transform: uppercase;
+        }
+    }
+
+    .days-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        .day {
+            min-width: calc(100% / 7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 45px;
+                height: 45px;
+                border-radius: 30px;
+
+                &.current {
+                    background-color: $color3;
+                    color: $color5;
+                }
+            }
+        }
+    }
+}
