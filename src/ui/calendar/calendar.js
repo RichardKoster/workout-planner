@@ -1,21 +1,15 @@
 export class Calendar {
     render(month, year) {
         const calendarEl = this.renderCalendar();
-        const days = new Date(year, month-1, 0).getDate();
-        const daysArray = [...Array(days).keys()].map(i => i + 1);
-        const firstDayOfMonth = new Date(year, month-1, 1);
-        const prefixDays = firstDayOfMonth.getUTCDay();
-
         calendarEl.appendChild(this.renderHeader());
 
-        const daysContainerEl = document.createElement('div');
-        daysContainerEl.classList.add('days-container');
-        for (let _ of [...Array(prefixDays).keys()].map(i => i + 1)) {
+        const daysContainerEl = this.renderDaysContainer();
+        for (let _ of [...Array(this.getPrefixDays(month, year)).keys()].map(i => i + 1)) {
             const prefixEl = document.createElement('div');
             prefixEl.classList.add('day');
             daysContainerEl.appendChild(prefixEl);
         }
-        for (let day of daysArray) {
+        for (let day of this.getDays(month, year)) {
             daysContainerEl.appendChild(this.renderDay(day, month, year));
         }
         calendarEl.appendChild(daysContainerEl);
@@ -23,11 +17,30 @@ export class Calendar {
         return calendarEl;
     }
 
+    getDays(month, year) {
+        const days = new Date(year, month-1, 0).getDate();
+
+        return [...Array(days).keys()].map(i => i + 1);
+    }
+
+    getPrefixDays(month, year) {
+        const firstDayOfMonth = new Date(year, month-1, 1);
+
+        return firstDayOfMonth.getUTCDay();
+    }
+
     renderCalendar() {
         const calendarEl = document.createElement('div');
         calendarEl.classList.add('calendar');
 
         return calendarEl;
+    }
+
+    renderDaysContainer() {
+        const daysContainerEl = document.createElement('div');
+        daysContainerEl.classList.add('days-container');
+
+        return daysContainerEl;
     }
 
     renderHeader() {
