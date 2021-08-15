@@ -24,6 +24,15 @@ module.exports = {
             "sass-loader",
             ],
         },
+        {
+            test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+            use: {
+              loader: 'file-loader',
+              options: {
+                name: '[path][name].[ext]',
+              },
+            },
+          },
         ],
     },
   };
