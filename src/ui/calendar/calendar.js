@@ -51,21 +51,21 @@ export class Calendar {
         prevButtonEl.classList.add('prev');
         prevButtonEl.classList.add('month-switch-button');
         const prevButtonIcon = document.createElement('i');
-        prevButtonIcon.classList.add('far');
-        prevButtonIcon.classList.add('fa-camera');
+        prevButtonIcon.classList.add('fas');
+        prevButtonIcon.classList.add('fa-angle-left');
         prevButtonEl.appendChild(prevButtonIcon);
 
         const nextButtonEl = document.createElement('div');
         nextButtonEl.classList.add('next');
         nextButtonEl.classList.add('month-switch-button');
         const nextButtonIcon = document.createElement('i');
-        nextButtonIcon.classList.add('far');
+        nextButtonIcon.classList.add('fas');
         nextButtonIcon.classList.add('fa-angle-right');
         nextButtonEl.appendChild(nextButtonIcon);
 
         const monthContainer = document.createElement('div');
         monthContainer.classList.add('month-holder');
-        monthContainer.textContent = selectedMonthName;
+        monthContainer.innerHTML = `<div><span>${selectedMonthName}</span><span>${this.year}</span></div>`;
 
         containerEl.appendChild(prevButtonEl);
         containerEl.appendChild(monthContainer);
@@ -143,8 +143,18 @@ export class Calendar {
     }
 
     changeMonth(e, context) {
-        const targetMonth = e.target.classList.contains('next') ? context.month + 1 : context.month - 1;
+        let targetMonth = e.target.classList.contains('next') ? context.month + 1 : context.month - 1;
+        let targetYear = this.year;
+        if (targetMonth == 0) {
+            targetMonth = 12;
+            targetYear = this.year - 1;
+        }
+        if (targetMonth == 13) {
+            targetMonth = 1
+            targetYear = this.year + 1;
+        }
         context.setMonth(targetMonth);
+        context.setYear(targetYear);
         context.render();
         context.setupEventListeners();
     }
