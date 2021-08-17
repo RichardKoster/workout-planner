@@ -1,3 +1,5 @@
+import {events} from '../../events/events';
+import { Dispatcher } from '../../events/dispatcher';
 export class Calendar {
 
     constructor() {
@@ -7,6 +9,7 @@ export class Calendar {
         this.wrapper.id = 'calendar-wrapper';
         this.month = null;
         this.year = null;
+        this.dispatcher = new Dispatcher(); 
     }
 
     render() {
@@ -153,6 +156,7 @@ export class Calendar {
             targetMonth = 1
             targetYear = this.year + 1;
         }
+        this.dispatcher.fire(events['CALENDAR_MONTH_CHANGED'], {'old': context.month, 'new': targetMonth});
         context.setMonth(targetMonth);
         context.setYear(targetYear);
         context.render();
