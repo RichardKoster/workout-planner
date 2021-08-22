@@ -4,6 +4,8 @@
 html, body {
     margin: 0;
     font-family: 'Lato', sans-serif;
+    background-color: $color4;
 }
 
-@import './ui/calendar/calendar.scss';
+@import '@app/ui/calendar/calendar.scss';
+@import '@app/ui/currentDay/currentDay.scss';

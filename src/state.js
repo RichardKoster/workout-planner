@@ -7,3 +7,10 @@ export const calendar = {
     year: 2021
   }
 };
+
+export const currentDay = {
+  element: document.createElement('div'),
+  currentDay: {
+    date: null,
+  }
+}

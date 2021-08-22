@@ -1,0 +1,17 @@
+.current-day {
+  width: auto;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: $color5;
+
+  .header{
+    .day-line {
+      font-size: 24px;
+    }
+
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+  }
+}

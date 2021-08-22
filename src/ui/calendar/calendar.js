@@ -1,22 +1,8 @@
-import { events } from '@app/events/events';
+import { CALENDAR_MONTH_CHANGED } from '@app/events/events';
 import { Dispatcher } from '@app/events/dispatcher';
 import { calendar } from '@app/state';
+import { MONTHS } from '@app/const';
 export class Calendar {
-
-    months = {
-        1: 'January', 
-        2: 'February',
-        3: 'March',
-        4: 'April',
-        5: 'May',
-        6: 'June',
-        7: 'July',
-        8: 'August',
-        9: 'September',
-        10: 'October',
-        11: 'November',
-        12: 'December',
-    };
 
     constructor() {
         this.dispatcher = new Dispatcher(); 
@@ -39,7 +25,7 @@ export class Calendar {
                 calendar.daysContainer.firstChild
             );
         }
-        calendar.monthContainer.querySelector('#month').textContent = this.months[calendar.date.month];
+        calendar.monthContainer.querySelector('#month').textContent = MONTHS[calendar.date.month];
         calendar.monthContainer.querySelector('#year').textContent = calendar.date.year;
         for (let _ of [...Array(this.getPrefixDays()).keys()].map(i => i + 1)) {
             const prefixEl = document.createElement('div');
@@ -52,7 +38,7 @@ export class Calendar {
     }
 
     renderMonthSelector() {
-        const selectedMonthName = this.months[calendar.date.month];
+        const selectedMonthName = MONTHS[calendar.date.month];
         const containerEl = document.createElement('div');
         containerEl.classList.add('month-selector-container');
         const prevButtonEl = document.createElement('div');
@@ -146,7 +132,7 @@ export class Calendar {
             targetMonth = 1
             targetYear = calendar.date.year + 1;
         }
-        // this.dispatcher.fire(events['CALENDAR_MONTH_CHANGED'], {'old': calendar.date.month, 'new': targetMonth});
+        this.dispatcher.fire(CALENDAR_MONTH_CHANGED, {'old': calendar.date.month, 'new': targetMonth});
         calendar.date.month = targetMonth;
         calendar.date.year = targetYear;
         this.render();

@@ -1,4 +1,2 @@
-export const events = {
-    'CALENDAR_DAY_SELECTED': 'calendar.day.selected',
-    'CALENDAR_MONTH_CHANGED': 'calendar.month.changed'
-};
+export const CALENDAR_DAY_SELECTED = 'calendar.day.selected';
+export const CALENDAR_MONTH_CHANGED = 'calendar.month.changed';
