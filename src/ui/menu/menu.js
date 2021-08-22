@@ -1,43 +1,39 @@
 import { menu } from "@app/state";
+import { menuTemplate } from "./template";
 
 export class Menu {
   constructor() {
     menu.element.className = 'menu';
   }
 
-  render() {
-    const titleEl = document.createElement('h1');
-    titleEl.textContent = "Workout planner";
-    menu.element.appendChild(titleEl);
+  getTemplate() {
+    const template = document.createElement('div');
+    template.innerHTML = menuTemplate;
 
-    const actions = document.createElement('div');
-    actions.className = "actions";
-    const addAction = this.createAction('fas fa-plus', 'add');
-    actions.appendChild(addAction);
-    menu.actions.push(addAction);
-    
-    menu.element.appendChild(actions);
+    return template.firstElementChild;
+  }
 
+  getMenuElement() {
+    return document.querySelector('.menu');
+  }
+
+  getActionsElement() {
+    return this.getMenuElement().querySelector('.actions');
+  }
+
+  init() {
     for (const action of menu.actions) {
-      action.addEventListener('click', (e) => {
-        const actionName = e.target.getAttribute('data-action');
-        switch (actionName) {
-          case 'add':
-            
-            break;
-        }
-      });
+      this.getActionsElement().appendChild(this.createAction(action.icon, action.action));
     }
   }
 
   createAction(icon, action) {
-    const actionEl = document.createElement('div');
-    actionEl.className = 'action';
-    actionEl.setAttribute('data-action', action);
-    const iconEl = document.createElement('i');
-    iconEl.className = icon;
-    actionEl.appendChild(iconEl);
-
-    return actionEl;
+    const container = document.createElement('div');
+    container.innerHTML = `
+    <div class="action" data-action="${action}">
+      <i class="${icon}"></i>
+    </div>
+    `;
+    return container.firstElementChild;
   }
 }

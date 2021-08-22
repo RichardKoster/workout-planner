@@ -24,14 +24,14 @@ export class Application {
     this.setListeners();
     this.dispatcher.fire(APPLICATION_PRE_INIT);
     const app = document.querySelector('#app');
-    app.appendChild(menu.element);
+    const nav = new Menu;
+    app.appendChild(nav.getTemplate());
     const cal = new Calendar;
     app.appendChild(cal.getTemplate());
     const currentDayObj = new CurrentDay;
     app.appendChild(currentDayObj.getTemplate())
 
-    const nav = new Menu;
-    nav.render();
+    nav.init();
     
     cal.setup();
     cal.render();

@@ -6,8 +6,6 @@ export const calendar = {
 };
 
 export const currentDay = {
-  element: document.createElement('div'),
-  header: null,
   currentDay: {
     date: null,
   }
@@ -15,5 +13,10 @@ export const currentDay = {
 
 export const menu = {
   element: document.createElement('nav'),
-  actions: []
+  actions: [
+    {
+      'action': 'add',
+      'icon': 'fas fa-plus'
+    }
+  ]
 }
