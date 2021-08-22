@@ -1,0 +1,32 @@
+nav.menu {
+  display: flex;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 50px;
+  background-color: $color5;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+
+  h1 {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .actions {
+    .action {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+
+      i {
+        pointer-events: none;
+      }
+    }
+  }
+}

@@ -7,5 +7,6 @@ html, body {
     background-color: $color1;
 }
 
+@import '@app/ui/menu/menu.scss';
 @import '@app/ui/calendar/calendar.scss';
 @import '@app/ui/currentDay/currentDay.scss';

@@ -15,3 +15,8 @@ export const currentDay = {
     date: null,
   }
 }
+
+export const menu = {
+  element: document.createElement('nav'),
+  actions: []
+}
