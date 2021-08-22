@@ -28,10 +28,12 @@ export class Calendar {
     const template = document.getElementById("day-template");
     const prefixTemplate = document.getElementById("prefix-day-template");
 
-    for (let _ of [...Array(this.getPrefixDays()).keys()].map((i) => i + 1)) {
-      const prefixDay = document.importNode(prefixTemplate, true);
-      container.appendChild(prefixDay);
-    }
+    [...Array(this.getPrefixDays()).keys()]
+      .map((i) => i + 1)
+      .forEach(() => {
+        const prefixDay = document.importNode(prefixTemplate.content, true);
+        container.appendChild(prefixDay);
+      });
     for (let day of this.getDays()) {
       const dayElement = document.importNode(template.content, true);
       dayElement.querySelector(".number").textContent = day;
