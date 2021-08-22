@@ -1,4 +1,10 @@
 {
+  "name": "workout-planner",
+  "displayName": "Workout planner",
+  "author": {
+    "name": "Richard Köster"
+  },
+  "version": "0.5",
   "dependencies": {
     "css-loader": "^6.2.0",
     "eslint": "^7.32.0",
