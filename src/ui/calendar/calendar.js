@@ -1,6 +1,6 @@
-import { CALENDAR_MONTH_CHANGED } from '@app/events/events';
+import { CALENDAR_DAY_SELECTED, CALENDAR_MONTH_CHANGED } from '@app/events/events';
 import { Dispatcher } from '@app/events/dispatcher';
-import { calendar } from '@app/state';
+import { calendar, currentDay } from '@app/state';
 import { MONTHS } from '@app/const';
 import { CALENDAR_MONTH, CALENDAR_YEAR, Storage } from '@app/storage/storage';
 export class Calendar {
@@ -31,11 +31,23 @@ export class Calendar {
         calendar.monthContainer.querySelector('#year').textContent = calendar.date.year;
         for (let _ of [...Array(this.getPrefixDays()).keys()].map(i => i + 1)) {
             const prefixEl = document.createElement('div');
-            prefixEl.classList.add('day');
+            prefixEl.className = 'day prefix';
             calendar.daysContainer.appendChild(prefixEl);
         }
         for (let day of this.getDays()) {
             calendar.daysContainer.appendChild(this.renderDay(day));
+        }
+
+        const days = document.querySelectorAll(".day.day-number");
+        for (const day of days) {
+            day.addEventListener('click', (e) => {
+                const selected = calendar.daysContainer.querySelector('.selected');
+                selected.classList.remove('selected');
+                day.classList.add('selected');
+                this.dispatcher.fire(CALENDAR_DAY_SELECTED, {
+                    day: e.target.getAttribute('date-day')
+                });
+            })
         }
     }
 
@@ -106,12 +118,15 @@ export class Calendar {
 
     renderDay(day) {
         const dayEl = document.createElement('div');
-        dayEl.classList.add('day');
+        dayEl.className = 'day day-number';
+        dayEl.setAttribute('date-day', day);
         const daySpanEl = document.createElement('span');
         daySpanEl.textContent = day;
         if (this.isCurrentDay(day, calendar.date.month, calendar.date.year)) {
-            daySpanEl.classList.add('current');
-            daySpanEl.classList.add('selected');
+            dayEl.classList.add('current');
+        }
+        if (this.isSelectedDay(day, calendar.date.month, calendar.date.year)) {
+            dayEl.classList.add('selected');
         }
         dayEl.appendChild(daySpanEl);
 
@@ -122,6 +137,16 @@ export class Calendar {
         const currentDate = new Date();
 
         return currentDate.getDate() === day && currentDate.getMonth() + 1 === month && currentDate.getFullYear() === year;
+    }
+
+    isSelectedDay(day, month, year) {
+        const current = {
+            day: currentDay.currentDay.date.getDate(),
+            month: currentDay.currentDay.date.getMonth(),
+            year: currentDay.currentDay.date.getFullYear()
+        }
+
+        return day === current.day && month === current.month && year === current.year;
     }
 
     changeMonth(e) {

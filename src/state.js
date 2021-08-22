@@ -10,6 +10,7 @@ export const calendar = {
 
 export const currentDay = {
   element: document.createElement('div'),
+  header: null,
   currentDay: {
     date: null,
   }

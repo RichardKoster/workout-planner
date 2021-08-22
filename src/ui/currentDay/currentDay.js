@@ -1,13 +1,19 @@
-import { currentDay } from "@app/state";
+import { CALENDAR_DAY_SELECTED } from "@app/events/events";
+import { calendar, currentDay } from "@app/state";
+import { CURRENT_DAY, Storage } from "@app/storage/storage";
 
 export class CurrentDay {
-  constructor() {}
+  constructor() {
+    this.storage = new Storage;
+  }
 
   setup() {
     currentDay.element.className = 'current-day';
 
-    const header = this.renderHeader();
-    currentDay.element.appendChild(header);
+    currentDay.header = this.renderHeader();
+    currentDay.element.appendChild(currentDay.header);
+
+    this.addListeners();
   }
 
   renderHeader() {
@@ -16,15 +22,35 @@ export class CurrentDay {
 
     const dayLine = document.createElement('span');
     dayLine.className = 'day-line';
-    const format = Intl.DateTimeFormat('en', {day: '2-digit', month: 'long'});
+    dayLine.textContent = this.getDayLine();
+    header.appendChild(dayLine);
+
+    return header;
+  }
+
+  dayChanged(e) {
+    currentDay.currentDay.date = new Date(calendar.date.year, calendar.date.month, e.detail.day);
+    this.storage.save(CURRENT_DAY, currentDay.currentDay.date);
+
+    currentDay.header.querySelector('.day-line').textContent = this.getDayLine();
+  }
+
+  getDate() {
+    const format = Intl.DateTimeFormat('en', {day: 'numeric', month: 'long'});
     const dateParts = format.formatToParts(currentDay.currentDay.date);
     const date = {};
     dateParts.map((part) => {
       date[part.type] = part.value;
     });
-    dayLine.textContent = `${date.day} ${date.month}`;
-    header.appendChild(dayLine);
 
-    return header;
+    return date;
+  }
+
+  getDayLine() {
+    return `${this.getDate().day} ${this.getDate().month}`
+  }
+
+  addListeners() {
+    document.addEventListener(CALENDAR_DAY_SELECTED, (e) => this.dayChanged(e))
   }
 }

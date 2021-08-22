@@ -72,12 +72,19 @@
                 width: 45px;
                 height: 45px;
                 border-radius: 30px;
+                pointer-events: none;
 
-                &.current {
+                transition: background .3s ease-in-out;
+            }
+
+            &.current {
+                span {
                     border: 1px solid $color2;
                 }
+            }
 
-                &.selected {
+            &.selected {
+                span {
                     background-color: $color3;
                     color: $color5;
                 }
