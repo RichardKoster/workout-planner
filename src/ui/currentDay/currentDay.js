@@ -1,14 +1,9 @@
-import { MONTHS } from "@app/const";
-import { calendar, currentDay } from "@app/state";
+import { currentDay } from "@app/state";
 
 export class CurrentDay {
-  constructor() {
-    
-  }
+  constructor() {}
 
   setup() {
-    currentDay.currentDay.date = new Date();
-
     currentDay.element.className = 'current-day';
 
     const header = this.renderHeader();

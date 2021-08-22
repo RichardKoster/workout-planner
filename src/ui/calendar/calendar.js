@@ -2,10 +2,12 @@ import { CALENDAR_MONTH_CHANGED } from '@app/events/events';
 import { Dispatcher } from '@app/events/dispatcher';
 import { calendar } from '@app/state';
 import { MONTHS } from '@app/const';
+import { CALENDAR_MONTH, CALENDAR_YEAR, Storage } from '@app/storage/storage';
 export class Calendar {
 
     constructor() {
-        this.dispatcher = new Dispatcher(); 
+        this.dispatcher = new Dispatcher;
+        this.storage = new Storage;
     }
 
     setup() {
@@ -133,9 +135,11 @@ export class Calendar {
             targetMonth = 1
             targetYear = calendar.date.year + 1;
         }
-        this.dispatcher.fire(CALENDAR_MONTH_CHANGED, {'old': calendar.date.month, 'new': targetMonth});
+        
         calendar.date.month = targetMonth;
         calendar.date.year = targetYear;
+        this.storage.save(CALENDAR_MONTH, targetMonth);
+        this.storage.save(CALENDAR_YEAR, targetYear);
         this.render();
     }
 
