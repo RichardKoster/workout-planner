@@ -5,26 +5,26 @@ import { currentDayTemplate } from "./template";
 
 export class CurrentDay {
   constructor() {
-    this.storage = new Storage;
+    this.storage = new Storage();
   }
 
   getTemplate() {
-    const template = document.createElement('div');
+    const template = document.createElement("div");
     template.innerHTML = currentDayTemplate;
 
     return template.firstElementChild;
   }
 
   getElement() {
-    return document.querySelector('.current-day');
+    return document.querySelector(".current-day");
   }
 
   getHeaderElement() {
-    return this.getElement().querySelector('.header');
+    return this.getElement().querySelector(".header");
   }
 
   getDaylineElement() {
-    return this.getHeaderElement().querySelector('.day-line');
+    return this.getHeaderElement().querySelector(".day-line");
   }
 
   init() {
@@ -38,14 +38,18 @@ export class CurrentDay {
   }
 
   dayChanged(e) {
-    currentDay.currentDay.date = new Date(calendar.date.year, calendar.date.month - 1, e.detail.day);
+    currentDay.currentDay.date = new Date(
+      calendar.date.year,
+      calendar.date.month - 1,
+      e.detail.day
+    );
     this.storage.save(CURRENT_DAY, currentDay.currentDay.date);
 
     this.getDaylineElement().textContent = this.getDayLine();
   }
 
   getDate() {
-    const format = Intl.DateTimeFormat('en', {day: 'numeric', month: 'long'});
+    const format = Intl.DateTimeFormat("en", { day: "numeric", month: "long" });
     const dateParts = format.formatToParts(currentDay.currentDay.date);
     const date = {};
     dateParts.map((part) => {
@@ -56,10 +60,10 @@ export class CurrentDay {
   }
 
   getDayLine() {
-    return `${this.getDate().day} ${this.getDate().month}`
+    return `${this.getDate().day} ${this.getDate().month}`;
   }
 
   addListeners() {
-    document.addEventListener(CALENDAR_DAY_SELECTED, (e) => this.dayChanged(e))
+    document.addEventListener(CALENDAR_DAY_SELECTED, (e) => this.dayChanged(e));
   }
 }

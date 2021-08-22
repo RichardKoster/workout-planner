@@ -3,37 +3,40 @@ import { menuTemplate } from "./template";
 
 export class Menu {
   constructor() {
-    menu.element.className = 'menu';
+    menu.element.className = "menu";
   }
 
   getTemplate() {
-    const template = document.createElement('div');
+    const template = document.createElement("div");
     template.innerHTML = menuTemplate;
 
     return template.firstElementChild;
   }
 
   getMenuElement() {
-    return document.querySelector('.menu');
+    return document.querySelector(".menu");
   }
 
   getActionsElement() {
-    return this.getMenuElement().querySelector('.actions');
+    return this.getMenuElement().querySelector(".actions");
   }
 
   init() {
     for (const action of menu.actions) {
-      this.getActionsElement().appendChild(this.createAction(action.icon, action.action));
+      this.getActionsElement().appendChild(
+        this.createAction(action.icon, action.action)
+      );
     }
   }
 
   createAction(icon, action) {
-    const container = document.createElement('div');
+    const container = document.createElement("div");
     container.innerHTML = `
     <div class="action" data-action="${action}">
       <i class="${icon}"></i>
     </div>
     `;
+
     return container.firstElementChild;
   }
 }

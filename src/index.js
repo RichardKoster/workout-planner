@@ -1,5 +1,5 @@
-import './main.scss';
-import { Application } from '@app/application';
+import "./main.scss";
+import { Application } from "@app/application";
 
-const application = new Application;
+const application = new Application();
 application.init();

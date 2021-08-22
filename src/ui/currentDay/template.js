@@ -4,4 +4,4 @@ export const currentDayTemplate = `
     <div class="day-line"></div>
   </div>
 </div>
-`
+`;

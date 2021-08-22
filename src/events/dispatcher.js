@@ -1,8 +1,8 @@
 export class Dispatcher {
-    constructor() {}
+  constructor() {}
 
-    fire(name, data = {}) {
-        const event = new CustomEvent(name, {'detail': data});
-        document.dispatchEvent(event);
-    }
+  fire(name, data = {}) {
+    const event = new CustomEvent(name, { detail: data });
+    document.dispatchEvent(event);
+  }
 }

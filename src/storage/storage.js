@@ -1,14 +1,13 @@
-
-export const CURRENT_DAY = 'current_day';
-export const CALENDAR_MONTH = 'calendar_month';
-export const CALENDAR_YEAR = 'calendar_year';
+export const CURRENT_DAY = "current_day";
+export const CALENDAR_MONTH = "calendar_month";
+export const CALENDAR_YEAR = "calendar_year";
 
 export class Storage {
   constructor() {}
 
   get(key, defaultValue) {
     const value = window.localStorage.getItem(key);
-    
+
     if (value === null) {
       this.save(key, defaultValue);
 
@@ -27,7 +26,7 @@ export class Storage {
     switch (type) {
       default:
         break;
-      case 'Date':
+      case "Date":
         value = value.toString();
         break;
     }
@@ -40,7 +39,7 @@ export class Storage {
     switch (value.type) {
       default:
         return value.value;
-      case 'Date':
+      case "Date":
         return new Date(value.value);
     }
   }
