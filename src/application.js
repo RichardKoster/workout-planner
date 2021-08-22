@@ -27,16 +27,14 @@ export class Application {
     app.appendChild(menu.element);
     const cal = new Calendar;
     app.appendChild(cal.getTemplate());
-    app.appendChild(currentDay.element)
+    const currentDayObj = new CurrentDay;
+    app.appendChild(currentDayObj.getTemplate())
 
     const nav = new Menu;
     nav.render();
-  
     
     cal.setup();
     cal.render();
-
-    const currentDayObj = new CurrentDay;
-    currentDayObj.setup();
+    currentDayObj.init();
   }
 }
