@@ -108,7 +108,8 @@ export class Calendar {
         const daySpanEl = document.createElement('span');
         daySpanEl.textContent = day;
         if (this.isCurrentDay(day, calendar.date.month, calendar.date.year)) {
-            daySpanEl.classList.add('current')
+            daySpanEl.classList.add('current');
+            daySpanEl.classList.add('selected');
         }
         dayEl.appendChild(daySpanEl);
 

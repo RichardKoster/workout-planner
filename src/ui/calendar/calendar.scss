@@ -74,6 +74,10 @@
                 border-radius: 30px;
 
                 &.current {
+                    border: 1px solid $color2;
+                }
+
+                &.selected {
                     background-color: $color3;
                     color: $color5;
                 }
