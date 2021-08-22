@@ -6,6 +6,7 @@
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-prettier": "^3.4.1",
     "file-loader": "^6.2.0",
+    "husky": "^7.0.1",
     "jest": "^27.0.6",
     "path": "^0.12.7",
     "prettier": "^2.3.2",
@@ -20,7 +21,9 @@
     "serve": "webpack serve",
     "prettier": "prettier --write .",
     "lint:js": "eslint --ext .js src/",
-    "lint:js:fix": "lint:js -- --fix"
+    "lint:js:fix": "lint:js -- --fix",
+    "test": "jest",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "env": {
