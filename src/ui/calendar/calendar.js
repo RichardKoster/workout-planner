@@ -3,6 +3,8 @@ import { Dispatcher } from '@app/events/dispatcher';
 import { calendar, currentDay } from '@app/state';
 import { MONTHS } from '@app/const';
 import { CALENDAR_MONTH, CALENDAR_YEAR, Storage } from '@app/storage/storage';
+import { calenderTemplate, dayTemplate, monthSelectorTemplate, prefixDayTemplate } from './templates';
+import { createTemplate } from '@app/util/template';
 export class Calendar {
 
     constructor() {
@@ -11,37 +13,48 @@ export class Calendar {
     }
 
     setup() {
-        calendar.element.classList.add('calendar');
-        calendar.monthContainer = this.renderMonthSelector();
-        calendar.element.appendChild(calendar.monthContainer);
-        calendar.element.appendChild(this.renderDaysHeader());
-        calendar.daysContainer = this.renderDaysContainer();
-        calendar.element.appendChild(calendar.daysContainer);
+        this.renderMonthSelector();
+        this.renderDaysHeader();
 
         this.addListeners();
     }
 
     render() {
-        while (calendar.daysContainer.firstChild) {
-            calendar.daysContainer.removeChild(
-                calendar.daysContainer.firstChild
+        while (this.getDaysContainer().firstChild) {
+            this.getDaysContainer().removeChild(
+                this.getDaysContainer().firstChild
             );
         }
-        calendar.monthContainer.querySelector('#month').textContent = MONTHS[calendar.date.month];
-        calendar.monthContainer.querySelector('#year').textContent = calendar.date.year;
+        this.renderMonthSelector();
+
+        const container = document.createElement('div');
+        container.className = 'days-container';
+        const template = document.getElementById('day-template');
+        const prefixTemplate = document.getElementById('prefix-day-template');
+
         for (let _ of [...Array(this.getPrefixDays()).keys()].map(i => i + 1)) {
-            const prefixEl = document.createElement('div');
-            prefixEl.className = 'day prefix';
-            calendar.daysContainer.appendChild(prefixEl);
+            const prefixDay = document.importNode(prefixTemplate, true);
+            container.appendChild(prefixDay);
         }
         for (let day of this.getDays()) {
-            calendar.daysContainer.appendChild(this.renderDay(day));
+            const dayElement = document.importNode(template.content, true);
+            dayElement.querySelector('.number').textContent = day;
+            dayElement.firstElementChild.setAttribute('date-day', day);
+            if (this.isCurrentDay(day, calendar.date.month, calendar.date.year)) {
+                dayElement.firstElementChild.classList.add('current');
+            }
+            if (this.isSelectedDay(day, calendar.date.month, calendar.date.year)) {
+                dayElement.firstElementChild.classList.add('selected');
+            }
+            
+            container.appendChild(dayElement);
         }
+        this.getDaysContainer().replaceWith(container);
 
         const days = document.querySelectorAll(".day.day-number");
         for (const day of days) {
             day.addEventListener('click', (e) => {
-                const selected = calendar.daysContainer.querySelector('.selected');
+                const selected = this.getDaysContainer().querySelector('.selected');
                 if (selected !== null) {
                     selected.classList.remove('selected');
                 }
@@ -53,35 +66,26 @@ export class Calendar {
         }
     }
 
+    getCalenderElement() {
+        return document.querySelector('.calendar');
+    }
+
+    getMonthHolder() {
+        return this.getCalenderElement().querySelector('.month-holder');
+    }
+
+    getDaysHeader() {
+        return this.getCalenderElement().querySelector('.header-container');
+    }
+
+    getDaysContainer() {
+        return this.getCalenderElement().querySelector('.days-container')
+    }
+
     renderMonthSelector() {
         const selectedMonthName = MONTHS[calendar.date.month];
-        const containerEl = document.createElement('div');
-        containerEl.classList.add('month-selector-container');
-        const prevButtonEl = document.createElement('div');
-        prevButtonEl.classList.add('prev');
-        prevButtonEl.classList.add('month-switch-button');
-        const prevButtonIcon = document.createElement('i');
-        prevButtonIcon.classList.add('fas');
-        prevButtonIcon.classList.add('fa-angle-left');
-        prevButtonEl.appendChild(prevButtonIcon);
-
-        const nextButtonEl = document.createElement('div');
-        nextButtonEl.classList.add('next');
-        nextButtonEl.classList.add('month-switch-button');
-        const nextButtonIcon = document.createElement('i');
-        nextButtonIcon.classList.add('fas');
-        nextButtonIcon.classList.add('fa-angle-right');
-        nextButtonEl.appendChild(nextButtonIcon);
-
-        const monthContainer = document.createElement('div');
-        monthContainer.classList.add('month-holder');
-        monthContainer.innerHTML = `<div><span id="month">${selectedMonthName}</span><span id="year">${calendar.date.year}</span></div>`;
-
-        containerEl.appendChild(prevButtonEl);
-        containerEl.appendChild(monthContainer);
-        containerEl.appendChild(nextButtonEl);
-
-        return containerEl;
+        this.getMonthHolder().querySelector('#month').textContent = selectedMonthName;
+        this.getMonthHolder().querySelector('#year').textContent = calendar.date.year;
     }
 
     getDays() {
@@ -96,43 +100,15 @@ export class Calendar {
         return firstDayOfMonth.getUTCDay();
     }
 
-    renderDaysContainer() {
-        const daysContainerEl = document.createElement('div');
-        daysContainerEl.classList.add('days-container');
-
-        return daysContainerEl;
-    }
-
     renderDaysHeader() {
         const dayNames = ['ma', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
-        const headerContainerEl = document.createElement('div');
-        headerContainerEl.classList.add('header-container')
         for (let name of dayNames) {
             const headerItem = document.createElement('div');
             const headerItemSpan = document.createElement('span');
             headerItemSpan.textContent = name;
             headerItem.appendChild(headerItemSpan);
-            headerContainerEl.appendChild(headerItem);
+            this.getDaysHeader().appendChild(headerItem);
         }
-
-        return headerContainerEl;
-    }
-
-    renderDay(day) {
-        const dayEl = document.createElement('div');
-        dayEl.className = 'day day-number';
-        dayEl.setAttribute('date-day', day);
-        const daySpanEl = document.createElement('span');
-        daySpanEl.textContent = day;
-        if (this.isCurrentDay(day, calendar.date.month, calendar.date.year)) {
-            dayEl.classList.add('current');
-        }
-        if (this.isSelectedDay(day, calendar.date.month, calendar.date.year)) {
-            dayEl.classList.add('selected');
-        }
-        dayEl.appendChild(daySpanEl);
-
-        return dayEl;
     }
 
     isCurrentDay(day, month, year) {
@@ -175,5 +151,12 @@ export class Calendar {
         for (const button of monthButtons) {
             button.addEventListener('click', (e) => this.changeMonth(e));
         }
+    }
+
+    getTemplate() {
+        const template = document.createElement('div');
+        template.innerHTML = calenderTemplate;
+
+        return template.firstElementChild;
     }
 }

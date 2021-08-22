@@ -20,7 +20,12 @@ export class Menu {
 
     for (const action of menu.actions) {
       action.addEventListener('click', (e) => {
-        console.log(e);
+        const actionName = e.target.getAttribute('data-action');
+        switch (actionName) {
+          case 'add':
+            
+            break;
+        }
       });
     }
   }

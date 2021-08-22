@@ -25,13 +25,14 @@ export class Application {
     this.dispatcher.fire(APPLICATION_PRE_INIT);
     const app = document.querySelector('#app');
     app.appendChild(menu.element);
-    app.appendChild(calendar.element);
+    const cal = new Calendar;
+    app.appendChild(cal.getTemplate());
     app.appendChild(currentDay.element)
 
     const nav = new Menu;
     nav.render();
   
-    const cal = new Calendar;
+    
     cal.setup();
     cal.render();
 
