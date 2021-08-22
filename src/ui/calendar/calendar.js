@@ -42,7 +42,9 @@ export class Calendar {
         for (const day of days) {
             day.addEventListener('click', (e) => {
                 const selected = calendar.daysContainer.querySelector('.selected');
-                selected.classList.remove('selected');
+                if (selected !== null) {
+                    selected.classList.remove('selected');
+                }
                 day.classList.add('selected');
                 this.dispatcher.fire(CALENDAR_DAY_SELECTED, {
                     day: e.target.getAttribute('date-day')
@@ -142,7 +144,7 @@ export class Calendar {
     isSelectedDay(day, month, year) {
         const current = {
             day: currentDay.currentDay.date.getDate(),
-            month: currentDay.currentDay.date.getMonth(),
+            month: currentDay.currentDay.date.getMonth() + 1,
             year: currentDay.currentDay.date.getFullYear()
         }
 

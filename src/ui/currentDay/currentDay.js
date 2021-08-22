@@ -29,7 +29,7 @@ export class CurrentDay {
   }
 
   dayChanged(e) {
-    currentDay.currentDay.date = new Date(calendar.date.year, calendar.date.month, e.detail.day);
+    currentDay.currentDay.date = new Date(calendar.date.year, calendar.date.month - 1, e.detail.day);
     this.storage.save(CURRENT_DAY, currentDay.currentDay.date);
 
     currentDay.header.querySelector('.day-line').textContent = this.getDayLine();
