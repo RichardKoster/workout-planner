@@ -1,12 +1,13 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/js/index.js",
   mode: "development",
   devtool: "inline-source-map",
   resolve: {
     alias: {
-      "@app": path.resolve(__dirname, "src/"),
+      "@app": path.resolve(__dirname, "src/js/"),
+      "@scss": path.resolve(__dirname, "src/scss/"),
     },
   },
   devServer: {

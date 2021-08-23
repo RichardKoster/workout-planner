@@ -1,4 +1,4 @@
-import "./main.scss";
+import "@scss/main.scss";
 import { Application } from "@app/application";
 
 const application = new Application();
