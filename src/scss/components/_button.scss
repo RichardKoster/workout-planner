@@ -1,0 +1,25 @@
+.btn {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  line-height: 1.5;
+  user-select: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  font-size: 15px;
+
+  &.btn-primary {
+    background-color: $color4;
+  }
+
+  &.btn-secondary {
+    background-color: $color3;
+  }
+
+  &.btn-danger {
+    background-color: $color2;
+  }
+}

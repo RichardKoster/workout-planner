@@ -1,9 +1,12 @@
+import { Dispatcher } from "@app/events/dispatcher";
+import { OVERLAY_CLOSE } from "@app/events/events";
 import { menu } from "@app/state";
-import { menuTemplate } from "./template";
+import { addGroupTemplate, menuTemplate } from "./template";
 
 export class Menu {
   constructor() {
     menu.element.className = "menu";
+    this.dispatcher = new Dispatcher();
   }
 
   getTemplate() {
@@ -23,9 +26,9 @@ export class Menu {
 
   init() {
     for (const action of menu.actions) {
-      this.getActionsElement().appendChild(
-        this.createAction(action.icon, action.action)
-      );
+      const actionEl = this.createAction(action.icon, action.action);
+      this.getActionsElement().appendChild(actionEl);
+      actionEl.addEventListener("click", (e) => this.actionClicked(e));
     }
   }
 
@@ -38,5 +41,27 @@ export class Menu {
     `;
 
     return container.firstElementChild;
+  }
+
+  actionClicked(e) {
+    const action = e.target.getAttribute("data-action");
+    switch (action) {
+      case "add":
+        this.addGroup();
+        break;
+    }
+  }
+
+  addGroup() {
+    const template = document.createElement("div");
+    template.innerHTML = addGroupTemplate;
+    const templateNode = template.firstElementChild;
+
+    document.querySelector("#app").appendChild(templateNode);
+    templateNode
+      .querySelector(".close-overlay")
+      .addEventListener("click", () => {
+        this.dispatcher.fire(OVERLAY_CLOSE);
+      });
   }
 }

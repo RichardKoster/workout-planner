@@ -1,4 +1,4 @@
-import { APPLICATION_PRE_INIT } from "@app/events/events";
+import { APPLICATION_PRE_INIT, OVERLAY_CLOSE } from "@app/events/events";
 import { calendar, currentDay } from "@app/state";
 import {
   CALENDAR_MONTH,
@@ -28,6 +28,9 @@ export class Application {
         new Date().getFullYear()
       );
       currentDay.currentDay.date = this.storage.get(CURRENT_DAY, new Date());
+    });
+    document.addEventListener(OVERLAY_CLOSE, () => {
+      document.querySelector(".overlay").remove();
     });
   }
 
