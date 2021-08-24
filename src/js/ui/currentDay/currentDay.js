@@ -1,7 +1,13 @@
+import { app } from "@app/application";
 import { CALENDAR_DAY_SELECTED } from "@app/events/events";
 import { calendar, currentDay } from "@app/state";
-import { CURRENT_DAY, Storage } from "@app/storage/storage";
-import { currentDayTemplate } from "./template";
+import {
+  CALENDAR_ITEMS,
+  CURRENT_DAY,
+  EXERCISES,
+  Storage,
+} from "@app/storage/storage";
+import { addItemsModal, currentDayTemplate } from "./template";
 
 export class CurrentDay {
   constructor() {
@@ -27,14 +33,29 @@ export class CurrentDay {
     return this.getHeaderElement().querySelector(".day-line");
   }
 
+  getDayPlanningElement() {
+    return this.getElement().querySelector("#day-planning");
+  }
+
   init() {
     this.renderHeader();
+    this.renderDayItems();
 
     this.addListeners();
   }
 
   renderHeader() {
     this.getDaylineElement().textContent = this.getDayLine();
+  }
+
+  renderDayItems() {
+    const calendarItems = this.storage.get(CALENDAR_ITEMS, {});
+    if (!calendarItems.hasOwnProperty(this.getDayLine())) {
+      return;
+    }
+
+    const dayExerciseGroups = calendarItems[this.getDayLine()];
+    console.log(dayExerciseGroups);
   }
 
   dayChanged(e) {
@@ -65,5 +86,65 @@ export class CurrentDay {
 
   addListeners() {
     document.addEventListener(CALENDAR_DAY_SELECTED, (e) => this.dayChanged(e));
+    this.getElement()
+      .querySelector("#add-item")
+      .addEventListener("click", () => {
+        this.showAddItemsModal();
+      });
+  }
+
+  showAddItemsModal() {
+    const modalTemplate = document.createElement("div");
+    modalTemplate.innerHTML = addItemsModal;
+    const modal = modalTemplate.firstElementChild;
+
+    const exerciseGroups = this.storage.get(EXERCISES, []);
+    const options = [];
+    exerciseGroups.map((exerciseGroup) => {
+      const option = document.createElement("option");
+      option.setAttribute("value", exerciseGroup.name);
+      option.textContent = exerciseGroup.name;
+      options.push(option.outerHTML);
+    });
+    modal.querySelector("#items").innerHTML = options.join("");
+
+    app.appendChild(modal);
+
+    app.querySelector(".modal-overlay").addEventListener("click", (e) => {
+      if (e.target.className === "modal-overlay") {
+        this.closeAddItemsModal();
+      }
+    });
+    modal.querySelector("[data-cancel]").addEventListener("click", () => {
+      this.closeAddItemsModal();
+    });
+    modal.querySelector("[data-submit]").addEventListener("click", () => {
+      this.submit(modal);
+    });
+  }
+
+  closeAddItemsModal() {
+    const overlay = app.querySelector(".modal-overlay");
+    if (overlay) {
+      overlay.remove();
+    }
+  }
+
+  submit(modal) {
+    const selected = modal.querySelector("#items").value;
+    const exercises = this.storage.get(EXERCISES, []);
+    const selectedExercise = exercises.find(
+      (exercise) => exercise.name === selected
+    );
+
+    const calendarItems = this.storage.get(CALENDAR_ITEMS, {});
+    if (!calendarItems.hasOwnProperty(this.getDayLine())) {
+      calendarItems[this.getDayLine()] = [];
+    }
+
+    calendarItems[this.getDayLine()].push(selectedExercise);
+    this.storage.save(CALENDAR_ITEMS, calendarItems);
+
+    this.closeAddItemsModal();
   }
 }

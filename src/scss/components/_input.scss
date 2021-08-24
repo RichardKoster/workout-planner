@@ -1,0 +1,18 @@
+.select {
+  position: relative;
+  select {
+    width: 100%;
+    appearance: none;
+    background: transparent;
+  }
+
+  &::after {
+    position: absolute;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f107";
+    color: black;
+    top: 10px;
+    right: 16px;
+  }
+}
