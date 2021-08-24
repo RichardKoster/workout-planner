@@ -3,11 +3,11 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  padding: 10px;
-  margin: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  background-color: $color5;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: $card-shadow;
+  background-color: ivory;
 
   .month-selector-container {
     width: 100%;
@@ -25,6 +25,7 @@
         align-items: center;
 
         span:last-child {
+          margin-top: 2px;
           font-size: 16px;
         }
       }
@@ -80,14 +81,14 @@
 
       &.current {
         span {
-          border: 1px solid $color2;
+          border: 1px solid tomato;
         }
       }
 
       &.selected {
         span {
-          background-color: $color3;
-          color: $color5;
+          background-color: $charcoal;
+          color: ivory;
         }
       }
     }
