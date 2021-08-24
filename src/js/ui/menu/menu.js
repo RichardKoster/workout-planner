@@ -1,7 +1,7 @@
 import { Dispatcher } from "@app/events/dispatcher";
-import { OVERLAY_CLOSE } from "@app/events/events";
 import { menu } from "@app/state";
-import { addGroupTemplate, menuTemplate } from "./template";
+import { CreateGroup } from "../createGroup/createGroup";
+import { menuTemplate } from "./template";
 
 export class Menu {
   constructor() {
@@ -53,15 +53,6 @@ export class Menu {
   }
 
   addGroup() {
-    const template = document.createElement("div");
-    template.innerHTML = addGroupTemplate;
-    const templateNode = template.firstElementChild;
-
-    document.querySelector("#app").appendChild(templateNode);
-    templateNode
-      .querySelector(".close-overlay")
-      .addEventListener("click", () => {
-        this.dispatcher.fire(OVERLAY_CLOSE);
-      });
+    new CreateGroup().open();
   }
 }

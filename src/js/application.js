@@ -11,6 +11,8 @@ import { CurrentDay } from "@app/ui/currentDay/currentDay";
 import { Dispatcher } from "@app/events/dispatcher";
 import { Menu } from "@app/ui/menu/menu";
 
+export const app = document.querySelector("#app");
+
 export class Application {
   constructor() {
     this.storage = new Storage();

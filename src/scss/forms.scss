@@ -5,11 +5,12 @@ form {
   .input-wrapper {
     display: flex;
     flex-direction: column;
-    margin: 0 20px 20px 20px;
+    margin: 0 20px 10px 20px;
 
     label {
       font-size: 18px;
       margin-bottom: 4px;
+      margin-top: 10px;
     }
 
     input {
@@ -17,7 +18,7 @@ form {
       padding: 14px 16px;
       margin: 0;
       appearance: none;
-      border: 1px solid rgba(0,0,0,0.3);
+      border: 1px solid rgba(0, 0, 0, 0.3);
       border-radius: 4px;
     }
   }

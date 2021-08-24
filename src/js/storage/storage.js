@@ -1,6 +1,7 @@
 export const CURRENT_DAY = "current_day";
 export const CALENDAR_MONTH = "calendar_month";
 export const CALENDAR_YEAR = "calendar_year";
+export const EXERCISES = "exercises";
 
 export class Storage {
   constructor() {}
