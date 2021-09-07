@@ -1,7 +1,7 @@
 export const addGroupTemplate = `
   <div class="overlay add-group">
     <h2>Add group</h2>
-    <div class="rounded-button close-overlay">
+    <div class="btn btn-round btn-gray close-overlay">
       <i class="fas fa-times"></i>
     </div>
     <form>

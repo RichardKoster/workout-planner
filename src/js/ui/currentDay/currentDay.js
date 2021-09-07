@@ -34,7 +34,7 @@ export class CurrentDay {
   }
 
   getDayPlanningElement() {
-    return this.getElement().querySelector("#day-planning");
+    return this.getElement().querySelector(".day-planning");
   }
 
   init() {
@@ -55,7 +55,26 @@ export class CurrentDay {
     }
 
     const dayExerciseGroups = calendarItems[this.getDayLine()];
-    console.log(dayExerciseGroups);
+    const containerTemplate = document.getElementById(
+      "planning-group-template"
+    );
+    const itemTemplate = document.getElementById("planning-item-template");
+    const planningContainer = this.getDayPlanningElement().cloneNode();
+    dayExerciseGroups.map((group) => {
+      const cardElement = document.importNode(containerTemplate.content, true);
+      cardElement.querySelector("[data-group-name]").textContent = group.name;
+
+      group.exercise.map((exercise) => {
+        let itemElement = document.importNode(itemTemplate.content, true);
+        itemElement.querySelector("[data-name]").textContent = exercise;
+
+        cardElement
+          .querySelector("[data-item-container]")
+          .appendChild(itemElement);
+      });
+      planningContainer.appendChild(cardElement);
+    });
+    this.getDayPlanningElement().replaceWith(planningContainer);
   }
 
   dayChanged(e) {

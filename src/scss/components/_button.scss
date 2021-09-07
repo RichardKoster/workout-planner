@@ -5,12 +5,16 @@
   vertical-align: middle;
   line-height: 1.5;
   user-select: none;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: $medium-spacing $large-spacing;
+  border-radius: $large-radius;
   background-color: transparent;
   border: 1px solid transparent;
   font-size: 16px;
   color: ivory;
+
+  i {
+    pointer-events: none;
+  }
 
   &.btn-primary {
     background-color: seagreen;
@@ -24,6 +28,10 @@
     background-color: tomato;
   }
 
+  &.btn-gray {
+    background-color: slategray;
+  }
+
   &.btn-outline-gray {
     border: 1px solid slategray;
     color: slategray;
@@ -31,6 +39,18 @@
 
   &.btn-block {
     display: block;
+  }
+
+  &.btn-round {
+    border-radius: 50px;
+    padding: $large-spacing;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 20px;
+    max-width: 20px;
+    min-height: 20px;
+    max-height: 20px;
   }
 }
 
@@ -46,13 +66,13 @@
     border-radius: 0;
 
     &:first-child {
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
+      border-top-left-radius: $large-radius;
+      border-bottom-left-radius: $large-radius;
     }
 
     &:last-child {
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
+      border-top-right-radius: $large-radius;
+      border-bottom-right-radius: $large-radius;
     }
   }
 }

@@ -7,6 +7,19 @@ export const currentDayTemplate = `
   <div id="add-item" class="btn btn-outline-gray btn-block">
     <i class="fas fa-plus"></i> Add items
   </div>
+  <template id="planning-group-template">
+    <div class="card">
+      <div class="card-header">
+        <span data-group-name class="card-title"></span>
+      </div>
+      <div data-item-container></div>
+    </div>
+  </template>
+  <template id="planning-item-template">
+    <div class="planning-item">
+      <p data-name></p>
+    </div>
+  </template>
 </div>
 `;
 

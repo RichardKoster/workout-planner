@@ -1,11 +1,13 @@
+@import "@scss/states/states.scss";
+
 .calendar {
   width: auto;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 20px;
+  padding: $large-spacing;
+  margin: $large-spacing;
+  border-radius: $large-radius;
   box-shadow: $card-shadow;
   background-color: ivory;
 
@@ -32,7 +34,7 @@
     }
 
     .month-switch-button {
-      padding: 10px;
+      padding: $medium-spacing;
 
       .far,
       .fas {
@@ -73,7 +75,7 @@
         align-items: center;
         width: 45px;
         height: 45px;
-        border-radius: 30px;
+        border-radius: $immense-radius;
         pointer-events: none;
 
         transition: background 0.3s ease-in-out;

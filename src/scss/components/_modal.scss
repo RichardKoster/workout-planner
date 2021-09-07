@@ -13,10 +13,10 @@
 
 .modal {
   width: 100%;
-  border-radius: 20px;
+  border-radius: $large-radius;
   position: relative;
-  padding: 20px;
-  margin: 20px;
+  padding: $large-spacing;
+  margin: $large-spacing;
   background-color: ivory;
   box-shadow: $card-shadow;
 }

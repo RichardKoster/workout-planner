@@ -1,0 +1,18 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: ivory;
+
+  h2 {
+    margin: 30px $large-spacing;
+  }
+
+  .close-overlay {
+    position: absolute;
+    top: $large-spacing;
+    right: $large-spacing;
+  }
+}
